@@ -79,14 +79,6 @@ def p_pen(p):
 def p_error(p):
    print("Syntax error in input!")
 
-
-
-# Build the parser
-parser=yacc.yacc()
-result=parser.parse(data) #the input
-# print (result)
-
-
 from lexing import data
 
 # Build the parser
