@@ -48,7 +48,7 @@ def p_loop(p):
     i=1
     while i<=p[2]:
         p[0]=p[4]
-
+        i=i+1
 
 def p_color(p):
     'color : COLOR colors'
