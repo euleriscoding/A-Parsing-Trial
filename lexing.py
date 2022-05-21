@@ -45,7 +45,7 @@ def t_error(t):
 lexer = lex.lex()
 # Test it out
 data = '''
-F 50 R 90
+L 36 [L 4 [F 100 R 90] R 10]
 ''' 
 
 lexer.input(data)
