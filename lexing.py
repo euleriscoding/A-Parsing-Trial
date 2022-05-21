@@ -7,17 +7,16 @@ tokens = (
     'BLUE',
     'BLACK',
     'FORW',
-    'RGHT',
+    'RIGHT',
     'LOOP',
     'COLOR',
     'PEN',
     'LSQB',
     'RSQB',
-    'EMPTY'
 ) 
 # Regular expression rules for simple tokens
 t_FORW    = r'F'
-t_RGHT   = r'R'
+t_RIGHT   = r'R'
 t_LOOP   = r'L'
 t_COLOR  = r'COLOR'
 t_PEN  = r'PEN'
@@ -27,7 +26,7 @@ t_RED  = r'K'
 t_GREEN  = r'Y'
 t_BLUE  = r'M'
 t_BLACK  = r'S'
-t_EMPTY = r'\ ' 
+ 
 # A regular expression rule with some action code
 def t_NUMBER(t):
     r'\d+'
@@ -47,7 +46,7 @@ def t_error(t):
 lexer = lex.lex()
 # Test it out
 data = '''
-L 36 [L 4 [F 100 R 90] R 10]
+F 50 R 90
 ''' 
 # Give the lexer some input
 lexer.input(data)
