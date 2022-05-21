@@ -26,7 +26,7 @@ def p_empty(p):
  
  
 def p_option(p):
-    '''option : function function
+    '''option : function start
               | empty '''
     if len(p)==2:
         p[0]=p[1]
