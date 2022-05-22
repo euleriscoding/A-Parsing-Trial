@@ -7,7 +7,7 @@ pattern = turtle.Turtle()
 import yacc
 
 class Node:
-     def _init_(self,type,children=None,leaf=None):
+     def __init__(self,type,children=None,leaf=None):
           self.type = type
           if children:
                self.children = children
@@ -15,31 +15,31 @@ class Node:
                self.children = [ ]
           self.leaf = leaf
 class Start(Node):
-    def  _init_(self,func,opt):
+    def  __init__(self,func,opt):
         self.func=func
         self.opt=opt
 class Forward(Node):
-    def _init_(self,forw,num1):
+    def __init__(self,forw,num1):
         self.forw=forw
         self.num1=num1
         def forw(num1):
             pattern.forward(num1)
 class Right(Node):
-    def _init_(self,rght,num2):
+    def __init__(self,rght,num2):
         self.rght=rght
         self.num2=num2
         def right_(num2):
             pattern.right(num2)
 class Loop(Node):
-    def _init_(self, num3, stmt):
+    def __init__(self, num3, stmt):
         self.num3 = num3
         self.stmt = stmt
 class Color(Node):
-    def _init_(self,col,rgb):
+    def __init__(self,col,rgb):
         self.col=col
         self.rgb=rgb
 class Pen(Node):
-    def _init_(self,size,num4):
+    def __init__(self,size,num4):
         self.size=size
         self.num4=num4
     def pensize(num4):
