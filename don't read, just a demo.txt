@@ -7,7 +7,7 @@ pattern = turtle.Turtle()
 import yacc
 
 class Node:
-     def __init__(self,type,children=None,leaf=None):
+     def _init_(self,type,children=None,leaf=None):
           self.type = type
           if children:
                self.children = children
@@ -22,10 +22,14 @@ class Forward(Node):
     def _init_(self,forw,num1):
         self.forw=forw
         self.num1=num1
+        def forw(num1):
+            pattern.forward(num1)
 class Right(Node):
     def _init_(self,rght,num2):
         self.rght=rght
         self.num2=num2
+        def right_(num2):
+            pattern.right(num2)
 class Loop(Node):
     def _init_(self, num3, stmt):
         self.num3 = num3
@@ -38,14 +42,22 @@ class Pen(Node):
     def _init_(self,size,num4):
         self.size=size
         self.num4=num4
+    def pensize(num4):
+        if num4 == 1:
+           pattern.pensize(1)
+        elif num4 == 2:
+           pattern.pensize(3)
+        elif num4 == 3:
+           pattern.pensize(5)
+
 
 
 def p_start(p):
     '''start : function 
              | function option'''
-    if len(p)==1:
+    if len(p)==2:
         p[0]=p[1]
-    elif len(p)==2:
+    elif len(p)==3:
         p[0]= Start(p[1],p[2])
 
 def p_function(p):
@@ -71,12 +83,12 @@ def p_option(p):
 def p_forward(p):
     'forward : FORW NUMBER' 
     p[0]= Forward(p[1],p[2])
-    #pattern.forward(p[2])
+    
  
 def p_right(p):
     'right : RIGHT NUMBER'
-    #p[0]=pattern.right(p[2])
-    p[0]= Forward(p[1],p[2])
+    
+    p[0]= Right(p[1],p[2])
 
 def p_loop(p):
     'loop : LOOP NUMBER LSQB start RSQB '
@@ -106,13 +118,7 @@ def p_colors(p):
 def p_pen(p):
     'pen : PEN NUMBER'
     p[0]=Pen(p[1],p[2])
-    # if p[2] == 1:
-    #     p[0]=pattern.pensize(1)
-    # elif p[2] == 2:
-    #     p[0]=pattern.pensize(3)
-    # elif p[2] == 3:
-    #     p[0]=pattern.pensize(5)
-
+    
 def p_error(p):
    print("Syntax error in input!")
 
