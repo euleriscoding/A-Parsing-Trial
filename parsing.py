@@ -5,10 +5,22 @@ import turtle
 pattern = turtle.Turtle()   
 #PARSER
 import yacc
+
+
+class Loop(Node):
+
+    def _init_(self, circle_stmt, stmt):
+        self.circle_stmt = circle_stmt
+        self.stmt = stmt
+
 def p_start(p):
     '''start : function 
              | option'''
     p[0]=p[1]
+
+# option >> F 50 R 60 F 40 
+# start >> option >> function start >> forward start >> forward function start >> forward right start >>
+# forward right function >> forward right forward
 
 def p_function(p):
     '''
@@ -47,8 +59,9 @@ def p_loop(p):
     'loop : LOOP NUMBER LSQB start RSQB '
     i=1
     while i<=p[2]:
-        p[0]=p[4]
-        i=i+1
+        p[0]= Loop(p[2],p[4])
+        i+=1
+
 
 def p_color(p):
     'color : COLOR colors'
@@ -78,6 +91,14 @@ def p_pen(p):
 
 def p_error(p):
    print("Syntax error in input!")
+
+
+
+# Build the parser
+parser=yacc.yacc()
+result=parser.parse(data) #the input
+# print (result)
+
 
 from lexing import data
 
