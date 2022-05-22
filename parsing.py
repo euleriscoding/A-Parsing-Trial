@@ -6,21 +6,41 @@ pattern = turtle.Turtle()
 #PARSER
 import yacc
 
-
+class Node:
+    pass
+class Start(Node):
+    def  _init_(self,func,opt):
+        self.func=func
+        self.opt=opt
+class Forward(Node):
+    def _init_(self,forw,num1):
+        self.forw=forw
+        self.num1=num1
+class Right(Node):
+    def _init_(self,rght,num2):
+        self.rght=rght
+        self.num2=num2
 class Loop(Node):
-
-    def _init_(self, circle_stmt, stmt):
-        self.circle_stmt = circle_stmt
+    def _init_(self, num3, stmt):
+        self.num3 = num3
         self.stmt = stmt
+class Color(Node):
+    def _init_(self,col,rgb):
+        self.col=col
+        self.rgb=rgb
+class Pen(Node):
+    def _init_(self,size,num4):
+        self.size=size
+        self.num4=num4
+
 
 def p_start(p):
     '''start : function 
-             | option'''
-    p[0]=p[1]
-
-# option >> F 50 R 60 F 40 
-# start >> option >> function start >> forward start >> forward function start >> forward right start >>
-# forward right function >> forward right forward
+             | function option'''
+    if len(p)==1:
+        p[0]=p[1]
+    elif len(p)==2:
+        p[0]= Start(p[1],p[2])
 
 def p_function(p):
     '''
@@ -38,22 +58,19 @@ def p_empty(p):
  
  
 def p_option(p):
-    '''option : function start
+    '''option : start
               | empty '''
-    if len(p)==2:
-        p[0]=p[1]
-        p[0].append(p[2])
-    elif len(p)==1:
-        p[0]=p[1]
+    p[0]=p[1]
 
 def p_forward(p):
     'forward : FORW NUMBER' 
-    p[0]=pattern.forward(p[2])
+    p[0]= Forward(p[1],p[2])
+    #pattern.forward(p[2])
  
 def p_right(p):
     'right : RIGHT NUMBER'
-    p[0]=pattern.right(p[2])
-
+    #p[0]=pattern.right(p[2])
+    p[0]= Forward(p[1],p[2])
 
 def p_loop(p):
     'loop : LOOP NUMBER LSQB start RSQB '
@@ -65,7 +82,7 @@ def p_loop(p):
 
 def p_color(p):
     'color : COLOR colors'
-
+    p[0]=Color(p[1],p[2])
 def p_colors(p):
     '''colors : BLACK 
               | BLUE
@@ -82,16 +99,16 @@ def p_colors(p):
 
 def p_pen(p):
     'pen : PEN NUMBER'
-    if p[2] == 1:
-        p[0]=pattern.pensize(1)
-    elif p[2] == 2:
-        p[0]=pattern.pensize(3)
-    elif p[2] == 3:
-        p[0]=pattern.pensize(5)
+    p[0]=Pen(p[1],p[2])
+    # if p[2] == 1:
+    #     p[0]=pattern.pensize(1)
+    # elif p[2] == 2:
+    #     p[0]=pattern.pensize(3)
+    # elif p[2] == 3:
+    #     p[0]=pattern.pensize(5)
 
 def p_error(p):
    print("Syntax error in input!")
-
 
 from lexing import data
 
